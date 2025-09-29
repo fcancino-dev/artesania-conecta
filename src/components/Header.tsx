@@ -1,6 +1,7 @@
+"use client";
 import { Search, Heart, ShoppingCart, Menu } from "lucide-react";
-import { useTheme } from "next-themes";
-import ThemeToggle from "./ThemeToggle";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function Header({
   searchTerm,
@@ -17,31 +18,16 @@ export default function Header({
   onToggleMenu: () => void;
   isMenuOpen: boolean;
 }) {
-  const { theme } = useTheme();
-
   return (
-    <header
-      className={`sticky top-0 z-50 backdrop-blur-md border-b shadow-lg ${
-        theme === "dark"
-          ? "text-slate-900 border-slate-700"
-          : "text-white border-orange-200"
-      }`}
-    >
+    <header className="sticky top-0 z-50 backdrop-blur-md border-b shadow-lg text-white border-orange-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-3">
-            {/* <div className="text-3xl">🎨</div> */}
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                 ArtesaníaConecta
               </h1>
-              <p
-                className={`text-xs ${
-                  theme === "dark" ? "text-slate-400" : "text-slate-600"
-                }`}
-              >
-                Conectando culturas
-              </p>
+              <p className="text-xs text-slate-600">Conectando culturas</p>
             </div>
           </div>
 
@@ -52,28 +38,14 @@ export default function Header({
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
                 placeholder="Buscar artesanías, artesanos..."
-                className={`w-full pl-10 pr-4 py-3 rounded-full border-2 focus:outline-none transition-colors ${
-                  theme === "dark"
-                    ? "border-slate-600 bg-slate-800 text-white focus:border-orange-400"
-                    : "border-orange-200 bg-white text-slate-900  focus:border-orange-500"
-                }`}
+                className="w-full pl-10 pr-4 py-3 rounded-full border-2 focus:outline-none border-orange-200 bg-white text-slate-900 focus:border-orange-500"
               />
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
-            <ThemeToggle />
-
-            <button
-              className={`relative p-2 rounded-full transition-colors ${
-                theme === "dark" ? "hover:bg-slate-700" : "hover:bg-orange-100"
-              }`}
-            >
-              <Heart
-                className={`w-6 h-6 ${
-                  theme === "dark" ? "text-slate-400" : "text-slate-600"
-                }`}
-              />
+            <button className="relative p-2 rounded-full hover:bg-orange-100">
+              <Heart className="w-6 h-6 text-slate-600" />
               {favoritesCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {favoritesCount}
@@ -81,7 +53,7 @@ export default function Header({
               )}
             </button>
 
-            <button className="relative p-2 rounded-full transition-colors">
+            <button className="relative p-2 rounded-full hover:bg-orange-100">
               <ShoppingCart className="w-6 h-6 text-slate-600" />
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -89,6 +61,12 @@ export default function Header({
                 </span>
               )}
             </button>
+
+            <Link href="/login" className="cursor-pointer">
+              <Button className="cursor-pointer bg-orange-500 shadow-lg transform scale-105">
+                <span>Iniciar sesión</span>
+              </Button>
+            </Link>
 
             <button
               onClick={onToggleMenu}
@@ -107,7 +85,7 @@ export default function Header({
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Buscar artesanías..."
-            className="w-full pl-10 pr-4 py-3 rounded-full border-2  focus:border-orange-500 focus:outline-none border-orange-200 bg-white"
+            className="w-full pl-10 pr-4 py-3 rounded-full border-2 focus:border-orange-500 focus:outline-none border-orange-200 bg-white text-slate-900"
           />
         </div>
       </div>

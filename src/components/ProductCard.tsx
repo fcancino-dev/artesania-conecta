@@ -41,16 +41,16 @@ export default function ProductCard({
         </div>
 
         <div className="absolute top-3 left-3 flex flex-col gap-2">
-          {product.trending && (
+          {/* {product.trending && (
             <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
               🔥 Tendencia
             </span>
-          )}
-          {product.sustainable && (
+          )} */}
+          {/* {product.sustainable && (
             <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
               🌱 Sostenible
             </span>
-          )}
+          )} */}
         </div>
 
         <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -76,52 +76,55 @@ export default function ProductCard({
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
           <h4 className="font-bold text-lg text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-2">
-            {product.name}
+            {product.nombre}
           </h4>
-          {product.customizable && (
+          {/* {product.customizable && (
             <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full ml-2 flex gap-1">
               <div>✨</div>
               <div>Personalizable</div>
             </span>
-          )}
+          )} */}
         </div>
 
         <div className="flex items-center space-x-3 mb-4">
-          <span className="text-2xl">{product.artisan.avatar}</span>
+          {/* <span className="text-2xl">{product.}</span> */}
           <div className="flex-1 min-w-0">
             <p className="font-medium text-slate-900 text-sm truncate">
-              {product.artisan.name}
+              {product.descripcion}
             </p>
             <div className="flex items-center space-x-1 text-xs text-slate-500">
               <MapPin className="w-3 h-3" />
-              <span className="truncate">{product.artisan.location}</span>
-              {product.artisan.verified && (
+              {/* <span className="truncate">{product.artisan.location}</span> */}
+              {/* {product.artisan.verified && (
                 <Shield className="w-3 h-3 text-blue-500" />
-              )}
+              )} */}
             </div>
           </div>
         </div>
 
         <div className="flex items-center space-x-2 mb-4">
-          <Rating value={product.rating} />
+          {/* <Rating value={product.rating} /> */}
           <span className="text-sm text-slate-500">
-            ({product.reviews} reseñas)
+            {/* ({product.reviews} reseñas) */}
           </span>
         </div>
 
         <div className="flex items-center space-x-2 mb-4">
           <span className="text-2xl font-bold text-orange-600">
-            S/ {product.price}
+            S/ {product.precio}
           </span>
-          {product.originalPrice && (
-            <span className="text-lg text-slate-400 line-through">
-              S/ {product.originalPrice}
-            </span>
-          )}
+          {
+            // product.originalPrice
+            product.precio && (
+              <span className="text-lg text-slate-400 line-through">
+                S/ {product.precio}
+              </span>
+            )
+          }
         </div>
 
         <div className="flex gap-3">
-          {product.customizable ? (
+          {/* {product.customizable ? (
             <div className="flex gap-2 flex-1">
               <button
                 onClick={() => onAddToCart(product)}
@@ -146,7 +149,7 @@ export default function ProductCard({
             >
               {product.inStock ? "Agregar al Carrito" : "Agotado"}
             </button>
-          )}
+          )} */}
 
           <button className="p-3 border-2 border-orange-200 text-orange-600 hover:bg-orange-50 rounded-full transition-colors">
             <MessageCircle className="w-5 h-5" />

@@ -1,148 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import { Eye, EyeOff, Palette, Mail, Lock } from "lucide-react";
+import { Palette } from "lucide-react";
+import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+import { FormLogin } from "@/components/login/FormLogin";
 
-// Simulando los componentes de shadcn/ui
-const Button = ({
-  children,
-  type = "button",
-  disabled = false,
-  className = "",
-  onClick,
-  ...props
-}) => (
-  <button
-    type={type}
-    disabled={disabled}
-    onClick={onClick}
-    className={`w-full bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 ${className}`}
-    {...props}
-  >
-    {children}
-  </button>
-);
-
-const Input = ({ className = "", error, value, onChange, ...props }) => (
-  <input
-    value={value}
-    onChange={onChange}
-    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 ${
-      error ? "border-red-500" : "border-gray-300"
-    } ${className}`}
-    {...props}
-  />
-);
-
-const Label = ({ children, className = "", ...props }) => (
-  <label
-    className={`block text-sm font-medium text-gray-700 mb-1 ${className}`}
-    {...props}
-  >
-    {children}
-  </label>
-);
-
-const Card = ({ children, className = "" }) => (
-  <div className={`bg-white rounded-lg shadow-lg ${className}`}>{children}</div>
-);
-
-const CardHeader = ({ children }) => (
-  <div className="px-6 py-6 border-b border-gray-200">{children}</div>
-);
-
-const CardContent = ({ children }) => (
-  <div className="px-6 py-6">{children}</div>
-);
-
-// Funciones de validación personalizadas
-const validateEmail = (email) => {
-  if (!email) return "El email es requerido";
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) return "Debe ser un email válido";
-  return "";
-};
-
-const validatePassword = (password) => {
-  if (!password) return "La contraseña es requerida";
-  if (password.length < 6)
-    return "La contraseña debe tener al menos 6 caracteres";
-  if (password.length > 50)
-    return "La contraseña no puede exceder 50 caracteres";
-  return "";
-};
-
-const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
+export default function LoginForm() {
+  // const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleInputChange = (field) => (e) => {
-    const value = e.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-
-    // Limpiar error cuando el usuario empiece a escribir
-    if (errors[field]) {
-      setErrors((prev) => ({
-        ...prev,
-        [field]: "",
-      }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {
-      email: validateEmail(formData.email),
-      password: validatePassword(formData.password),
-    };
-
-    setErrors(newErrors);
-    return !newErrors.email && !newErrors.password;
-  };
-
   const handleSubmit = async () => {
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      // Simulación de llamada a API
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      console.log("Datos de login:", {
-        email: formData.email,
-        password: formData.password,
-        rememberMe,
-      });
-
-      alert(`¡Bienvenido a Artesanía Conecta!\nEmail: ${formData.email}`);
-
-      // Aquí iría la lógica real de autenticación
-      // router.push('/dashboard');
-    } catch (error) {
-      console.error("Error en el login:", error);
-      alert("Error al iniciar sesión. Por favor, inténtalo de nuevo.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSubmit();
-    }
+    console.log("Submitting form with data:");
   };
 
   return (
@@ -160,8 +30,8 @@ const LoginForm = () => {
         ></div>
       </div>
 
-      <Card className="w-full max-w-md relative z-10">
-        <CardHeader>
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md relative z-10">
+        <div className="px-6 py-6 border-b border-gray-200">
           <div className="flex flex-col items-center space-y-4">
             {/* Logo */}
             <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
@@ -178,12 +48,13 @@ const LoginForm = () => {
               </p>
             </div>
           </div>
-        </CardHeader>
+        </div>
 
-        <CardContent>
+        <div className="px-6 py-6">
           <div className="space-y-6">
             {/* Campo Email */}
-            <div className="space-y-2">
+            <FormLogin></FormLogin>
+            {/* <div className="space-y-2">
               <Label htmlFor="email">
                 <div className="flex items-center space-x-2">
                   <Mail className="w-4 h-4 text-amber-600" />
@@ -194,22 +65,11 @@ const LoginForm = () => {
                 id="email"
                 type="email"
                 placeholder="artesano@ejemplo.com"
-                value={formData.email}
-                onChange={handleInputChange("email")}
-                onKeyPress={handleKeyPress}
-                error={errors.email}
-                autoComplete="email"
               />
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1 flex items-center animate-fade-in">
-                  <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-                  {errors.email}
-                </p>
-              )}
-            </div>
+            </div> */}
 
             {/* Campo Contraseña */}
-            <div className="space-y-2">
+            {/* <div className="">
               <Label htmlFor="password">
                 <div className="flex items-center space-x-2">
                   <Lock className="w-4 h-4 text-amber-600" />
@@ -217,21 +77,11 @@ const LoginForm = () => {
                 </div>
               </Label>
               <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={handleInputChange("password")}
-                  onKeyPress={handleKeyPress}
-                  error={errors.password}
-                  autoComplete="current-password"
-                />
+                <Input id="password" type="password" placeholder="••••••••" />
                 <button
-                  type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                  tabIndex="-1"
+                  // tabIndex="-1"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -240,16 +90,10 @@ const LoginForm = () => {
                   )}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-1 flex items-center animate-fade-in">
-                  <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-                  {errors.password}
-                </p>
-              )}
-            </div>
+            </div> */}
 
             {/* Opciones adicionales */}
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -271,13 +115,14 @@ const LoginForm = () => {
               >
                 ¿Olvidaste tu contraseña?
               </button>
-            </div>
+            </div> */}
 
-            {/* Botón de envío */}
+            {/* Botón de envío
             <Button
-              type="button"
+              // type="button"
               disabled={isLoading}
-              className="relative"
+              // className="relative"
+              className="w-full bg-amber-600 hover:bg-amber-700 cursor-pointer"
               onClick={handleSubmit}
             >
               {isLoading ? (
@@ -288,7 +133,7 @@ const LoginForm = () => {
               ) : (
                 "Iniciar Sesión"
               )}
-            </Button>
+            </Button> */}
 
             {/* Divider */}
             <div className="relative">
@@ -313,26 +158,10 @@ const LoginForm = () => {
               </button>
             </div>
           </div>
-        </CardContent>
-      </Card>
-
-      <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out;
-        }
-      `}</style>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
-export default LoginForm;
+// export default LoginForm;

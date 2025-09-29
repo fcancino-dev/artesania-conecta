@@ -1,46 +1,22 @@
-export type CustomizationOption = {
-  id: string;
-  name: string;
-  options: string[];
-  price: number;
-};
-
-export type Artisan = {
+// Producto que viene de la API
+export interface Product {
+  // originalPrice: any;
   id: number;
-  name: string;
-  location: string;
-  speciality: string;
-  rating: number;
-  verified: boolean;
-  avatar: string;
-  story?: string;
-};
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  stock: number;
+  id_artesano: number;
+}
 
-export type Product = {
+// Artesano que viene de la API
+export interface Usuario {
   id: number;
-  name: string;
-  category: string;
-  price: number;
-  originalPrice?: number;
-  artisan: Artisan;
-  rating: number;
-  reviews: number;
-  images: string[];
-  description: string;
-  features: string[];
-  inStock: boolean;
-  stockCount: number;
-  deliveryTime: string;
-  trending: boolean;
-  sustainable: boolean;
-  customizable: boolean;
-  customizationPrice?: number;
-  customizationOptions?: CustomizationOption[];
-};
-
-export type CartItem = {
-  cartId: number;
-  product: Product;
-  customizations?: Record<string, string>;
-  finalPrice: number;
-};
+  nombre: string;
+  email: string;
+  rol: string;
+  especialidad: string,
+  descripcion: string,
+  foto: string,
+  location : string,
+}
